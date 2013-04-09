@@ -18,24 +18,25 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 			}
 
 			function bindTouchEvents(element) {
-				element
-					.swipeEvents()
-					.bind("swipeLeft",  next )
-					.bind("swipeRight", prev );
+				if(Modernizr.touch) {
+					element
+						.swipeEvents()
+						.live("swipeLeft",  next )
+						.live("swipeRight", prev );
+				} 
 			}
 
 			function init(config) {
 				index = config.index;
 
-				if(Modernizr.touch) {
-					bindTouchEvents(panelElement);
-				} 
+				bindTouchEvents(panelElement); 
 			}
 
 			return {
 				init: init,
 				element: panelElement,
-				index: getIndex
+				index: getIndex,
+				bindSwipe: bindTouchEvents
 			}
 		}
 

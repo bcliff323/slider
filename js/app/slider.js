@@ -15,8 +15,6 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(S
                     step = obj.step || '',
                     distance = xCoord;
 
-                if (direction === 'right' && distance === 0) { return; }
-                if (direction === 'left' && distance <= -((numPanels-1)*slideTravel)) { return; }
                 if (direction === 'left') {
                     distance -= slideTravel;
                 } else if (direction === 'right') {
@@ -28,9 +26,35 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(S
                 panelObj
                     .animate({
                         'left' : distance + 'px'
-                    }, 500);
+                    }, 500, function(){
+                        var cloneObj = null;
 
-                xCoord = distance;
+                        if (direction === 'left') {
+                            moveObj = $(this).find('.panel').first();
+                            $(this).append(moveObj);
+                            xCoord = distance+slideTravel;
+                            $(this).css('left', xCoord);
+                        } else if (direction === 'right') {
+                            moveObj = panelObj.find('.panel').last();
+                            $(this).prepend(moveObj);
+                            xCoord = distance-slideTravel;
+                            $(this).css('left', xCoord);
+                        }
+                    });
+                
+            }
+
+            function clonePanels() {
+                var slider = panelObj,
+                    first = slider.find('.panel').first().clone(),
+                    second = slider.find('.panel').first().next().clone(),
+                    last = slider.find('.panel').last().clone();
+
+                slider.append(first);
+                slider.append(second);
+                slider.prepend(last);
+
+                numPanels += 3;
             }
 
             function getNumPanels() {
@@ -60,8 +84,8 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(S
                 var nextBtn = new Button($(obj.nextBtn)),
                     prevBtn = new Button($(obj.prevBtn));
 
-                nextBtn.init('next');
-                prevBtn.init('prev');
+                nextBtn.init({ dir: 'next', parent: panelObj });
+                prevBtn.init({ dir: 'prev', parent: panelObj });
             }
 
             function buildPanels() {
@@ -93,6 +117,7 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(S
         		slideTravel = parseInt($(slideClass).css('width').replace('px','')) + 30;
                 xCoord = (obj.offset || 0) * slideTravel;
                 setPanels(obj.panelClass);
+                clonePanels();
                 buildPanels();
                 buildButtons(obj);
                 buildNav();

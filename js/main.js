@@ -11,7 +11,7 @@ require(["lib/jquery", "app/slider"], function(jQuery, Slider) {
     	nextBtn: '.nextBtn',
     	prevBtn: '.prevBtn',
     	navClass: '.step',
-        offset: -1 
+        offset: -2
     });
     
     window.swipe = swipe;

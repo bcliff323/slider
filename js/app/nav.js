@@ -9,7 +9,7 @@ define(["lib/pubsub"], function() {
 					.click(function(e){
 						e.preventDefault();
 
-						var index = $(this).index();
+						var index = $(this).attr('index');
 						$.publish("/toggle/direct", index);
 					});
 			}
