@@ -12,13 +12,6 @@ define(["lib/pubsub"], function() {
 				} 
 			}
 
-			function subscribe() {
-				$.subscribe("/rebindbutton", function(event, dir) {
-                    direction = dir;
-                    bindEvent();
-                });
-			}
-
 			function bindEvent() {
 				element
 					.bind('click', function(){
@@ -37,7 +30,6 @@ define(["lib/pubsub"], function() {
 				parent = config.parent;
 				direction = config.dir || '';
 				bindEvent();
-				subscribe();
 			}
 
 			return {

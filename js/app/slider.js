@@ -10,6 +10,11 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(S
                 xCoord = 0,
                 slideTravel = 0;
 
+            function show() {
+                panelObj
+                    .css('display', 'block');
+            }
+
             function toggle(obj) {
                 var direction = obj.direction || '',
                     step = obj.step || '',
