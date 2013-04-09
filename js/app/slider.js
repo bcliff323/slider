@@ -74,6 +74,11 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(S
                     );
                     set[i].init({ index: i });
                 }
+
+                if(xCoord !== 0) {
+                    panelObj
+                        .css('left', xCoord);
+                }
             }
 
             function setPanels(sClass) {
@@ -84,7 +89,9 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(S
         	function init(obj) {
                 if (slideClass.length < 1) { slideClass = obj.panelClass; }
                 if (navClass.length < 1) { navClass = obj.navClass; }
+
         		slideTravel = parseInt($(slideClass).css('width').replace('px','')) + 30;
+                xCoord = (obj.offset || 0) * slideTravel;
                 setPanels(obj.panelClass);
                 buildPanels();
                 buildButtons(obj);
