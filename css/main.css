@@ -1,0 +1,11 @@
+.shell { max-width:938px; min-height:400px; position: relative; margin:20px auto; }
+.wrapper { max-width:938px; min-height:400px; position:relative; }
+#container { height:100%; overflow: auto; min-width: 5000px; position:absolute; left:0; top:0; }
+.panel { background:#ccc; float:left; min-width: 908px; min-height: 400px; margin:0 15px;}
+.cf { clear: both; }
+.imgLink { display: block; float:right; }
+.btn { min-width: 30px; min-height: 30px; background: #666; position: absolute;}
+.nextBtn { right: -30px; top:150px; }
+.prevBtn { left: -30px; top:150px; }
+.fl { float: left; }
+.nav li { font-size: 20px; width:20px; }
