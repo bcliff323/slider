@@ -1,3 +1,9 @@
+/*
+ * @author Eike Send
+ * @email eike.send@gmail.com
+ *
+ * Fork on github: https://github.com/eikes/jquery.swipe-events.js
+ */
 (function($) { 
   $.fn.swipeEvents = function() {
     return this.each(function() {

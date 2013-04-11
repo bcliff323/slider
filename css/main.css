@@ -1,6 +1,6 @@
 body { overflow-x:hidden;}
 .shell { max-width:938px; min-height:400px; position: relative; margin:20px auto;}
-.wrapper { max-width:938px; min-height:400px; position:relative;}
+.wrapper { width:2814px; min-height:400px; position:relative; left:-938px; overflow:hidden;}
 #container { height:100%; overflow: auto; min-width: 5700px; position:absolute; left:-938px; top:0;}
 .panel { background:#ccc; float:left; min-width: 908px; min-height: 400px; margin:0 15px;}
 .cf { clear: both; }
