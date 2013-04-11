@@ -4,103 +4,40 @@
 	<meta charset="UTF-8">
 	<title>Require JS</title>
 	<link href="css/main.css" rel="stylesheet">
-	<!--<style>
-	body{margin:0;padding:0;}
-	.sliderWrapper{
-		width:100%;  /* full body width */
-		overflow:hidden;  /*prevent horizontal scrolling */
-		height:400px; /* should be variable to allow for different designs */
-		background:#ddd; /* TEMPORARY: used for illustration purposes */
-		position: relative;
-	}
-	.sliderMainViewport{
-		margin:0 auto; /* center the viewport for the "main" slide */
-		width:960px; /* "main" viewport width */
-		overflow-x:visible; /* allow previous/next slide content to peek through */
-		position:relative; /* needed to absolutely position child elements (slides) */
-		height:100%; /* full slide container height */
-		background:#ccc; /* TEMPORARY: used for illustration purposes */
-	}
-	.panel{
-		position:absolute; /* allows for slide positioning within parent viewport */
-		top: 0; /* not sure if this is necessary, older IEs tend to be buggy without this */
-		width:960px; /* should be variable to allow for different designs */
-	}
-	.prevSlide{left:-960px;}
-	.currentSlide{left:0px;}
-	.nextSlide{left:960px;}
-	h2{margin:0;}
-
-	</style>-->
 </head>
 <body>
-
-		<div class="wrapper">
-			<div id="container">
-				<div class="viewPort" style="position:relative;">
-					<div class="panel">
-						<h1 class="title">This title 1</h1>
-						<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-						<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-					</div>
-					<div class="panel">
-						<h1 class="title">This title 2</h1>
-						<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-						<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-						<a href="http://www.rei.com" class="imgLink">
-							<img src="http://placehold.it/400x250" alt="photo" class="photo">
-							<img src="http://placehold.it/400x250" alt="photo" class="photo">
-						</a>
-					</div>
-					<div class="panel">
-						<h1 class="title">This title 3</h1>
-						<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-						<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-						<a href="http://www.rei.com" class="imgLink">
-							<img src="http://placehold.it/400x250" alt="photo" class="photo">
-							<img src="http://placehold.it/400x250" alt="photo" class="photo">
-						</a>
-					</div>
+	<div class="wrapper">
+		<div id="container">
+			<div class="viewPort" style="position:relative;">
+				<div class="panel">
+					<h1 class="title">This title 1</h1>
+					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
+					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
 				</div>
-				<div class="nextBtn btn"></div>
-				<div class="prevBtn btn"></div>
-				<div class="nav cf">
-					<ul>
-						<li href="#" class="step fl" index="1"></li>
-						<li href="#" class="step fl" index="2"></li>
-						<li href="#" class="step fl" index="3"></li>
-					</ul>
+				<div class="panel">
+					<h1 class="title">This title 2</h1>
+					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
+					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
+				</div>
+				<div class="panel">
+					<h1 class="title">This title 3</h1>
+					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
+					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
 				</div>
 			</div>
+			<div class="nextBtn btn"></div>
+			<div class="prevBtn btn"></div>
+			<div class="nav cf">
+				<ul>
+					<li href="#" class="step fl" index="1"></li>
+					<li href="#" class="step fl" index="2"></li>
+					<li href="#" class="step fl" index="3"></li>
+				</ul>
+			</div>
 		</div>
+	</div>
+	<!--<script type="text/javascript" data-main="js/main" src="js/lib/require.js"></script>-->
 
-	<!--<div class="sliderWrapper">
-		<div class="sliderMainViewport">
-			<div class="panel prevSlide">
-				<h2>This is the previous slide</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quam beatae saepe iure tempore dolores eos magnam voluptas! Magnam error deleniti voluptate natus explicabo temporibus velit optio aut veniam officiis.</p>
-			</div>
-			<div class="panel currentSlide">
-				<h2>This is the current slide</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quam beatae saepe iure tempore dolores eos magnam voluptas! Magnam error deleniti voluptate natus explicabo temporibus velit optio aut veniam officiis.</p>
-			</div>
-			<div class="panel nextSlide">
-				<h2>This is the next slide</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quam beatae saepe iure tempore dolores eos magnam voluptas! Magnam error deleniti voluptate natus explicabo temporibus velit optio aut veniam officiis.</p>
-			</div>
-		</div>
-		<div class="nextBtn btn"></div>
-		<div class="prevBtn btn"></div>
-		<div class="nav cf">
-			<ul>
-				<li href="#" class="step fl" index="1"></li>
-				<li href="#" class="step fl" index="2"></li>
-				<li href="#" class="step fl" index="3"></li>
-			</ul>
-		</div>
-	</div>-->
-	<script type="text/javascript" data-main="js/main" src="js/lib/require.js"></script>
-
-	<!--<script type="text/javascript" src="js/main.min.js"></script>-->
+	<script type="text/javascript" src="js/main.min.js"></script>
 </body>
 </html>

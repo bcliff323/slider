@@ -3,20 +3,19 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(P
         var Slider = function() {
         	var self = this,
                 panelClass = '',
-                slideObj = null,
+                panelSet = [],
                 numPanels = 0,
                 panels = null,
-                panelSet = [];
+                slideObj = null,
+                nextObj = null,
+                prevObj = null;
 
-            function subscribe() {
-                $.subscribe("/shuffle/append", function(event, obj) {
-                    $('.veiwPort').append(obj);
-                });
+            function buildButtons() {
+                var nextBtn = new Button(nextObj),
+                    prevBtn = new Button(prevObj);
 
-                $.subscribe("/shuffle/prepend", function(event, obj) {
-                    console.log(obj);
-                    $('.veiwPort').prepend(obj);
-                });
+                nextBtn.init({ dir: 'next', panels: panelClass });
+                prevBtn.init({ dir: 'prev', panels: panelClass });
             }
 
             function buildPanels() {
@@ -59,6 +58,8 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(P
 
             function init(config) {
                 panelClass = config.panelClass;
+                nextObj = $(config.nextClass);
+                prevObj = $(config.prevClass);
                 setPanels();
                 slideObj = panels.parent();
 
@@ -67,7 +68,7 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(P
                 }
                 
                 buildPanels();
-                subscribe();
+                buildButtons();
             }
 
             return {

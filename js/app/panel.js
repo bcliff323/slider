@@ -8,11 +8,22 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				index = 0,
 				xCoord = 0;
 
+			function shuffle(dir) {
+				if (dir === 'prepend') {
+					panelElement
+						.css('left', width * -2);
+					xCoord = width * -2;
+				} else if (dir === 'append') {
+					panelElement
+						.css('left', width * 3);
+					xCoord = width * 3;
+				}
+			}
+
 			function toggle(obj) {
 				var direction = obj.direction,
 					distance = (direction === 'left') ? (-1 * width) : width; 
-				console.log(index);
-				console.log(xCoord);
+
 				panelElement
 					.animate({
 						'left': xCoord+distance
@@ -20,9 +31,9 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 						xCoord += distance;
 
 						if (xCoord < -(width*2)) {
-							$.publish("/shuffle/append", panelElement);
+							shuffle('append');
 						} else if (xCoord > (width*3)) {
-							$.publish("/shuffle/prepend", panelElement);
+							shuffle('prepend');
 						}
 					});
 			}

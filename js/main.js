@@ -8,6 +8,8 @@ require(["lib/jquery", "app/slider"], function(jQuery, Slider) {
     var swipe = new Slider();
     swipe.init({ 
     	panelClass: '.panel',
+        nextClass: '.nextBtn',
+        prevClass: '.prevBtn'
     });
     
     window.swipe = swipe;
