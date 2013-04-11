@@ -1,12 +1,33 @@
-body { overflow-x:hidden;}
-.shell { max-width:938px; min-height:400px; position: relative; margin:20px auto;}
-.wrapper { width:2814px; min-height:400px; position:relative; left:-938px; overflow:hidden;}
-#container { height:100%; overflow: auto; min-width: 5700px; position:absolute; left:-938px; top:0;}
-.panel { background:#ccc; float:left; min-width: 908px; min-height: 400px; margin:0 15px;}
+.wrapper { 
+	width:100%; 
+	min-height:400px; 
+	position:relative; 
+	overflow:hidden; 
+}
+#container { 
+	height:420px; 
+	overflow-x:visible; 
+	width: 938px;  
+	margin:0 auto; 
+	position:relative; 
+}
+.panel { 
+	background:#ccc; 
+	float:left; 
+	min-width: 908px; 
+	height:400px; 
+	margin:0 15px; 
+	position: absolute;
+}
+.prevSlide{left:-938px;}
+.currentSlide{left:0px;}
+.nextSlide{left:938px;}
 .cf { clear: both; }
 .imgLink { display: block; float:right; }
-.btn { min-width: 30px; min-height: 30px; background: #666; position: absolute;}
+.btn { min-width: 30px; min-height: 30px; background: #666; position: absolute; z-index: 2;}
 .nextBtn { right: -30px; top:150px; }
 .prevBtn { left: -30px; top:150px; }
 .fl { float: left; }
+.nav { position: absolute; bottom:0; width:100%; text-align: center; }
+.nav ul { margin:0 auto; }
 .nav li { font-size: 20px; width:20px; }

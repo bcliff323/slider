@@ -19,7 +19,6 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 
 			function bindTouchEvents(element) {
 				element
-					ç
 					.bind("swipeLeft",  next )
 					.bind("swipeRight", prev );
 			}

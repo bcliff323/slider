@@ -104,10 +104,10 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(S
                     set[i].init({ index: i });
                 }
 
-                if(xCoord !== 0) {
+                /*if(xCoord !== 0) {
                     panelObj
                         .css('left', xCoord);
-                }
+                }*/
             }
 
             function setPanels(sClass) {
@@ -122,7 +122,7 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(S
         		slideTravel = parseInt($(slideClass).css('width').replace('px','')) + 30;
                 xCoord = (obj.offset || 0) * slideTravel;
                 setPanels(obj.panelClass);
-                clonePanels();
+                //clonePanels();
                 buildPanels();
                 buildButtons(obj);
                 buildNav();
