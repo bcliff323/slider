@@ -1,7 +1,19 @@
-define(["../app/panel", "../app/button", "../app/nav", "../app/timer", "lib/pubsub"], function(Panel, Button, Nav, Timer) {
+define(
+
+    [
+            "../app/panel", 
+            "../app/button", 
+            "../app/nav", 
+            "../app/timer",
+            "../app/querystring", 
+            "lib/pubsub"
+    ], 
+
+    function(Panel, Button, Nav, Timer, QueryString) {
         
         var Slider = function() {
         	var self = this,
+                urlParam = QueryString("slide") || 1,
                 autoPlay = false,
                 panelClass = '',
                 panelSet = [],
@@ -39,6 +51,12 @@ define(["../app/panel", "../app/button", "../app/nav", "../app/timer", "lib/pubs
                 $.subscribe("/toggle/autoplay", function(event) {
                     advance();
                 });
+            }
+
+            function specificOrder(first) {
+                var hero = first;
+
+                console.log(hero);
             }
 
             function buildButtons() {
@@ -103,6 +121,10 @@ define(["../app/panel", "../app/button", "../app/nav", "../app/timer", "lib/pubs
                 buildPanels();
                 buildButtons();
                 subscribe();
+
+                if (urlParam > 1 && urlParam <= uniquePanels) {
+                    specificOrder(urlParam);
+                }
 
                 if (autoPlay) {
                     newTimer(autoPlay);
