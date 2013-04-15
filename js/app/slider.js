@@ -1,4 +1,4 @@
-define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(Panel, Button, Nav) {
+define(["../app/panel", "../app/button", "../app/nav", "../app/timer", "lib/pubsub"], function(Panel, Button, Nav, Timer) {
         
         var Slider = function() {
         	var self = this,
@@ -11,10 +11,34 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(P
                 panels = null,
                 slideObj = null,
                 nextObj = null,
-                prevObj = null;
+                prevObj = null,
+                timer = null;
 
-            function startTimer() {
-                console.log(uniquePanels);
+            function advance() {
+                if (index < uniquePanels) {
+                    $.publish("/toggle/next");
+                    index++;
+                } else {
+                    timer.stop();
+                    timer = null;
+                }
+            }
+
+            function newTimer(speed) {
+                timer = new Timer();
+                timer.init(speed);
+            }
+
+            function stopTimer() {
+                if (timer !== null) {
+                    timer.stop();
+                }
+            }
+
+            function subscribe() {
+                $.subscribe("/toggle/autoplay", function(event) {
+                    advance();
+                });
             }
 
             function buildButtons() {
@@ -78,9 +102,10 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(P
                 
                 buildPanels();
                 buildButtons();
+                subscribe();
 
                 if (autoPlay) {
-                    startTimer();
+                    newTimer(autoPlay);
                 }
             }
 
