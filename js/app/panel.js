@@ -8,6 +8,16 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				index = 0,
 				xCoord = 0;
 
+			function toPosition(obj) {
+				var position = obj.pos,
+					distance = ((index+1) - position) * width;
+
+				panelElement
+					.css('left', distance);
+
+				xCoord = distance;
+			}
+
 			function shuffle(dir) {
 				if (dir === 'prepend') {
 					panelElement
@@ -47,8 +57,8 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
                     toggle({ direction: 'right' });
                 });
 
-                $.subscribe("/toggle/direct", function(event, index) {
-                    toggle({ step: index });
+                $.subscribe("/toggle/direct", function(event, p) {
+                    toPosition({ pos: p });
                 });
 			}
 

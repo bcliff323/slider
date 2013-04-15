@@ -54,9 +54,9 @@ define(
             }
 
             function specificOrder(first) {
-                var hero = first;
-
-                console.log(hero);
+                index = first;
+                stopTimer();
+                $.publish("/toggle/direct", first);
             }
 
             function buildButtons() {
@@ -122,12 +122,12 @@ define(
                 buildButtons();
                 subscribe();
 
-                if (urlParam > 1 && urlParam <= uniquePanels) {
-                    specificOrder(urlParam);
-                }
-
                 if (autoPlay) {
                     newTimer(autoPlay);
+                }
+
+                if (urlParam > 1 && urlParam <= uniquePanels) {
+                    specificOrder(parseInt(urlParam));
                 }
             }
 
