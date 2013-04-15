@@ -9,7 +9,8 @@ require(["lib/jquery", "app/slider"], function(jQuery, Slider) {
     swipe.init({ 
     	panelClass: '.panel',
         nextClass: '.nextBtn',
-        prevClass: '.prevBtn'
+        prevClass: '.prevBtn',
+        autoPlay: 3000
     });
     
     window.swipe = swipe;

@@ -2,13 +2,20 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(P
         
         var Slider = function() {
         	var self = this,
+                autoPlay = false,
                 panelClass = '',
                 panelSet = [],
+                uniquePanels = 0,
                 numPanels = 0,
+                index = 0,
                 panels = null,
                 slideObj = null,
                 nextObj = null,
                 prevObj = null;
+
+            function startTimer() {
+                console.log(uniquePanels);
+            }
 
             function buildButtons() {
                 var nextBtn = new Button(nextObj),
@@ -53,6 +60,7 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(P
 
             function setPanels() {
                 panels = $(panelClass);
+                uniquePanels = numPanels;
                 numPanels = panels.length;
             }
 
@@ -60,6 +68,7 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(P
                 panelClass = config.panelClass;
                 nextObj = $(config.nextClass);
                 prevObj = $(config.prevClass);
+                autoPlay = config.autoPlay || false;
                 setPanels();
                 slideObj = panels.parent();
 
@@ -69,6 +78,10 @@ define(["../app/panel", "../app/button", "../app/nav", "lib/pubsub"], function(P
                 
                 buildPanels();
                 buildButtons();
+
+                if (autoPlay) {
+                    startTimer();
+                }
             }
 
             return {
