@@ -51,14 +51,6 @@ define(
                 $.subscribe("/toggle/autoplay", function(event) {
                     advance();
                 });
-
-                $.subscribe("/toggle/finish", function(event, element, pos) {
-                    console.log(event.currentTarget, pos);
-                    //console.log(panelSet[pos+numPanels].element.css('opacity', .5));
-                    //console.log($(element).css('opacity', .5));
-                    //panelSet[pos].toPosition({ pos: pos });
-
-                });
             }
 
             function specificOrder(first) {

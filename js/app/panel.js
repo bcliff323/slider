@@ -9,14 +9,8 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				xCoord = 0,
 				position = 0;
 
-			function toPosition(obj) {
-				var position = obj.pos,
-					distance = ((index+1) - position) * width;
-
-				panelElement
-					.css('left', distance);
-
-				xCoord = distance;
+			function numSiblings() {
+				return panelElement.parent().children().length;
 			}
 
 			function shuffle(obj) {
@@ -25,13 +19,34 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				} else if (obj.direction === 'prepend') {
 					xCoord = width*(-(obj.n - obj.pos)); 
 				}
-				
+
 				panelElement
 					.css('left', xCoord);
+
+				position = (xCoord/width);
+			}
+
+			function toPosition(obj) {
+				var siblings = numSiblings(),
+					xDelta = obj.pos,
+					distance = ((xCoord/width) - (xDelta-1)) * width;
+
+				panelElement
+					.css('left', distance);
+
+				xCoord = distance;
+
+				if ((xCoord/width) < -2) {
+					shuffle({ 
+						pos: (xCoord/width), 
+						n: siblings,
+						direction: 'append'
+					});
+				}
 			}
 
 			function toggle(obj) {
-				var siblings = panelElement.parent().children().length,
+				var siblings = numSiblings(),
 					direction = obj.direction,
 					distance = (direction === 'left') ? (-1 * width) : width; 
 
@@ -73,11 +88,15 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 			}
 
 			function next() {
-				$.publish("/toggle/next");
+				if (!panelElement.is(':animated')) {
+					$.publish("/toggle/next");
+				}
 			}
 
 			function prev() {
-				$.publish("/toggle/prev");
+				if (!panelElement.is(':animated')) {
+					$.publish("/toggle/prev");
+				}
 			}
 
 			function bindTouchEvents(element) {
