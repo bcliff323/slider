@@ -6,7 +6,8 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				panelMargin = parseInt(panelElement.css('margin-left').replace('px',''))*2,
 				width = parseInt(panelElement.css('width').replace('px','')) + panelMargin,
 				index = 0,
-				xCoord = 0;
+				xCoord = 0,
+				position = 0;
 
 			function toPosition(obj) {
 				var position = obj.pos,
@@ -18,20 +19,20 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				xCoord = distance;
 			}
 
-			function shuffle(dir) {
-				if (dir === 'prepend') {
-					panelElement
-						.css('left', width * -2);
-					xCoord = width * -2;
-				} else if (dir === 'append') {
-					panelElement
-						.css('left', width * 3);
-					xCoord = width * 3;
+			function shuffle(obj) {
+				if (obj.direction === 'append') {
+					xCoord = width*(obj.pos+obj.n); 
+				} else if (obj.direction === 'prepend') {
+					xCoord = width*(-(obj.n - obj.pos)); 
 				}
+				
+				panelElement
+					.css('left', xCoord);
 			}
 
 			function toggle(obj) {
-				var direction = obj.direction,
+				var siblings = panelElement.parent().children().length,
+					direction = obj.direction,
 					distance = (direction === 'left') ? (-1 * width) : width; 
 
 				panelElement
@@ -39,11 +40,20 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 						'left': xCoord+distance
 					}, 500, function(){
 						xCoord += distance;
+						position = xCoord/width;
 
-						if (xCoord < -(width*2)) {
-							shuffle('append');
-						} else if (xCoord > (width*3)) {
-							shuffle('prepend');
+						if (position < -2) {
+							shuffle({ 
+								pos: position, 
+								n: siblings,
+								direction: 'append'
+							});
+						} else if (position >= siblings-2) {
+							shuffle({ 
+								pos: position,
+								n: siblings,
+								direction: 'prepend' 
+							});
 						}
 					});
 			}
@@ -89,7 +99,8 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 
 			function init(config) {
 				index = config.index;
-				setXPosition(index*width);
+				xCoord = index*width;
+				setXPosition(xCoord);
 				if(Modernizr.touch) {
 					bindTouchEvents(panelElement);
 				}
@@ -99,7 +110,8 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 			return {
 				init: init,
 				element: panelElement,
-				index: getIndex
+				index: getIndex,
+				toPosition: shuffle
 			}
 		}
 
