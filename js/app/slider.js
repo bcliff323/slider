@@ -128,6 +128,7 @@ define(
 
                 if (urlParam > 1 && urlParam <= uniquePanels) {
                     specificOrder(parseInt(urlParam));
+                    autoPlay = false;
                 }
 
                 if (autoPlay) {
