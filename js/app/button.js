@@ -17,6 +17,8 @@ define(["lib/pubsub"], function() {
 					.bind('click', function(){
 						if (panels.is(':animated')) { return; }
 
+						$.publish("/toggle/stopTimer");
+
 						if (direction === 'next') {
 							$.publish("/toggle/next");
 						} else if (direction === 'prev') {

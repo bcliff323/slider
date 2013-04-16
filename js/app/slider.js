@@ -51,6 +51,10 @@ define(
                 $.subscribe("/toggle/autoplay", function(event) {
                     advance();
                 });
+
+                $.subscribe("/toggle/stopTimer", function(event) {
+                    stopTimer();
+                });
             }
 
             function specificOrder(first) {
@@ -83,20 +87,23 @@ define(
 
             function clonePanels() {
                 var slider = slideObj,
-                    first = slider.find(panelClass).first().clone(),
-                    second = slider.find(panelClass).first().next().clone(),
-                    third = slider.find(panelClass).first().next().next().clone(),
-                    fourth = null;
+                    clones = null;
 
-                if (numPanels === 3) {
-                    slider
-                        .append(first)
-                        .prepend(third)
-                        .prepend(second);
-                } else if (numPanels === 4) {
-
+                if (numPanels > 2 && numPanels < 6) {
+                    clones = slider.find(panelClass).clone();
+                } else {
+                    clones = slider.find(panelClass);
                 }
 
+                slider
+                    .append(clones);
+
+                if (urlParam === '1' || urlParam === 1 || urlParam > uniquePanels) {
+                    slider
+                        .prepend($(clones)[clones.length-1])
+                        .prepend($(clones)[clones.length-2]);
+                }
+                
                 setPanels();
             }
 
@@ -114,20 +121,17 @@ define(
                 setPanels();
                 slideObj = panels.parent();
 
-                if (numPanels > 2 && numPanels < 5) {
-                    clonePanels();
-                }
-                
+                clonePanels();
                 buildPanels();
                 buildButtons();
                 subscribe();
 
-                if (autoPlay) {
-                    //newTimer(autoPlay);
-                }
-
                 if (urlParam > 1 && urlParam <= uniquePanels) {
                     specificOrder(parseInt(urlParam));
+                }
+
+                if (autoPlay) {
+                    newTimer(autoPlay);
                 }
             }
 

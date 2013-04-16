@@ -89,12 +89,14 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 
 			function next() {
 				if (!panelElement.is(':animated')) {
+					$.publish("/toggle/stopTimer");
 					$.publish("/toggle/next");
 				}
 			}
 
 			function prev() {
 				if (!panelElement.is(':animated')) {
+					$.publish("/toggle/stopTimer");
 					$.publish("/toggle/prev");
 				}
 			}
