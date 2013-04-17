@@ -5,7 +5,7 @@ define(
             "../app/button", 
             "../app/nav", 
             "../app/timer",
-            "../app/querystring", 
+            "../app/querystring",
             "lib/pubsub"
     ], 
 
@@ -54,6 +54,10 @@ define(
 
                 $.subscribe("/toggle/stopTimer", function(event) {
                     stopTimer();
+                });
+
+                $.subscribe("/image/loaded", function(event, numLoaded) {
+                    console.log(numLoaded);
                 });
             }
 
@@ -129,10 +133,6 @@ define(
                 if (urlParam > 1 && urlParam <= uniquePanels) {
                     specificOrder(parseInt(urlParam));
                     autoPlay = false;
-                }
-
-                if (autoPlay) {
-                    newTimer(autoPlay);
                 }
             }
 

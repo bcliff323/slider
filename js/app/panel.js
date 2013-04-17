@@ -7,10 +7,23 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				width = parseInt(panelElement.css('width').replace('px','')) + panelMargin,
 				index = 0,
 				xCoord = 0,
-				position = 0;
+				position = 0,
+				bgImage = '';
 
 			function numSiblings() {
 				return panelElement.parent().children().length;
+			}
+
+			function loadBackground() {
+				var imgPath = bgImage,
+					img = new Image();
+
+				img.src = imgPath;
+
+				$(img).load(function(){
+					panelElement.append('<img alt="" class="bg" src="' + bgImage + '" />');
+					$.publish("/image/loaded", index+3);
+				});
 			}
 
 			function shuffle(obj) {
@@ -121,11 +134,16 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 			function init(config) {
 				index = config.index;
 				xCoord = index*width;
+				bgImage = panelElement.attr('data-background');
 				setXPosition(xCoord);
-				if(Modernizr.touch) {
+				if (Modernizr.touch) {
 					bindTouchEvents(panelElement);
 				}
 				subscribe();
+
+				if (typeof bgImage !== 'undefined') {
+					loadBackground();
+				}
 			}
 
 			return {

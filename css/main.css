@@ -18,7 +18,19 @@
 	height:400px; 
 	margin:0 15px; 
 	position: absolute;
+	display: none;
 }
+.panel * {
+	position: relative;
+	z-index: 1;
+}
+.bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+}
+.active { display: block; }
 .prevSlide{left:-938px;}
 .currentSlide{left:0px;}
 .nextSlide{left:938px;}
