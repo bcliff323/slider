@@ -2,14 +2,13 @@ define(
 
     [
             "../app/panel", 
-            "../app/button", 
-            "../app/nav", 
+            "../app/button",  
             "../app/timer",
             "../app/querystring",
             "lib/pubsub"
     ], 
 
-    function(Panel, Button, Nav, Timer, QueryString) {
+    function(Panel, Button, Timer, QueryString) {
         
         var Slider = function() {
         	var self = this,
