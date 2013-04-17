@@ -4,7 +4,7 @@
 	position:relative; 
 	overflow:hidden; 
 }
-#container { 
+#container, #container1, #container2 { 
 	height:420px; 
 	overflow-x:visible; 
 	width: 938px;  

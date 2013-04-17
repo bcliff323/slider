@@ -5,6 +5,7 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				panelElement = panel || null,
 				panelMargin = parseInt(panelElement.css('margin-left').replace('px',''))*2,
 				width = parseInt(panelElement.css('width').replace('px','')) + panelMargin,
+				panelId = '',
 				index = 0,
 				xCoord = 0,
 				position = 0,
@@ -21,7 +22,7 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				img.src = imgPath;
 
 				if (panelElement.hasClass('active')) {
-					$.publish("/image/loaded", { 
+					$.publish("/" + panelId.replace('#','') + "/loaded", { 
 						element: panelElement, 
 						path: bgImage, 
 						loadIndex: index+3,
@@ -29,7 +30,7 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 					});
 				} else {
 					$(img).load(function(){
-						$.publish("/image/loaded", { 
+						$.publish("/" + panelId.replace('#','') + "/loaded", { 
 							element: panelElement, 
 							path: bgImage, 
 							loadIndex: index+3,
@@ -106,30 +107,30 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 			}
 
 			function subscribe() {
-				$.subscribe("/toggle/next", function(event) {
+				$.subscribe("/" + panelId.replace('#','') + "/next", function(event) {
                     toggle({ direction: 'left' });
                 });
 
-                $.subscribe("/toggle/prev", function(event) {
+                $.subscribe("/" + panelId.replace('#','') + "/prev", function(event) {
                     toggle({ direction: 'right' });
                 });
 
-                $.subscribe("/toggle/direct", function(event, p) {
+                $.subscribe("/" + panelId.replace('#','') + "/direct", function(event, p) {
                     toPosition({ pos: p });
                 });
 			}
 
 			function next() {
 				if (!panelElement.is(':animated')) {
-					$.publish("/toggle/stopTimer");
-					$.publish("/toggle/next");
+					$.publish("/" + panelId.replace('#','') + "/stopTimer");
+					$.publish("/" + panelId.replace('#','') + "/next");
 				}
 			}
 
 			function prev() {
 				if (!panelElement.is(':animated')) {
-					$.publish("/toggle/stopTimer");
-					$.publish("/toggle/prev");
+					$.publish("/" + panelId.replace('#','') + "/stopTimer");
+					$.publish("/" + panelId.replace('#','') + "/prev");
 				}
 			}
 
@@ -152,6 +153,7 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 			}
 
 			function init(config) {
+				panelId = config.container;
 				index = config.index;
 				xCoord = index*width;
 				bgImage = panelElement.attr('data-background');

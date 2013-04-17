@@ -29,7 +29,7 @@ define(
 
             function advance() {
                 if (index < uniquePanels) {
-                    $.publish("/toggle/next");
+                    $.publish("/" + panelId.replace('#','') + "/next");
                     index++;
                 } else {
                     timer.stop();
@@ -49,20 +49,19 @@ define(
             }
 
             function subscribe() {
-                $.subscribe("/toggle/autoplay", function(event) {
+                $.subscribe("/" + panelId.replace('#','') + "/autoplay", function(event) {
                     advance();
                 });
 
-                $.subscribe("/toggle/stopTimer", function(event) {
+                $.subscribe("/" + panelId.replace('#','') + "/stopTimer", function(event) {
                     stopTimer();
                 });
 
-                $.subscribe("/image/loaded", function(event, obj) {
+                $.subscribe("/" + panelId.replace('#','') + "/loaded", function(event, obj) {
                     var markup = '<img alt="" class="bg" src="' + obj.path + '" />';
                     $(obj.element).append(markup);
 
                     if (obj.skipFade) {
-                        console.log('skipped');
                         $(obj.element).addClass('active');
                     } else {
                         if (obj.loadIndex === numPanels) {
@@ -79,15 +78,15 @@ define(
             function specificOrder(first) {
                 index = first;
                 stopTimer();
-                $.publish("/toggle/direct", first);
+                $.publish("/" + panelId.replace('#','') + "/direct", first);
             }
 
             function buildButtons() {
                 var nextBtn = new Button(nextObj),
                     prevBtn = new Button(prevObj);
 
-                nextBtn.init({ dir: 'next', panels: panelClass });
-                prevBtn.init({ dir: 'prev', panels: panelClass });
+                nextBtn.init({ dir: 'next', panels: panelClass, container: panelId });
+                prevBtn.init({ dir: 'prev', panels: panelClass, container: panelId });
             }
 
             function buildPanels() {
@@ -99,7 +98,8 @@ define(
                             new Panel($(pnls[i+2]))
                     );
                     panelSet[i+2].init({ 
-                        index: i
+                        index: i,
+                        container: panelId
                     });
                 }
             }
@@ -135,8 +135,8 @@ define(
             function init(config) {
                 panelId = config.panelId;
                 panelClass = config.panelClass;
-                nextObj = $(config.nextClass);
-                prevObj = $(config.prevClass);
+                nextObj = $(config.nextClass, config.panelId);
+                prevObj = $(config.prevClass, config.panelId);
                 autoPlay = config.autoPlay || false;
                 setPanels();
                 slideObj = panels.parent();
@@ -150,7 +150,7 @@ define(
                     specificOrder(parseInt(urlParam));
                     autoPlay = false;
                 } else {
-                    $(panels[2]).addClass('active');
+                    $(panels[2], config.panelId).addClass('active');
                 }
             }
 

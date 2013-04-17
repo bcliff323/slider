@@ -4,6 +4,7 @@ define(["lib/pubsub"], function() {
 			var self = this,
 				element = element || null,
 				panels = null,
+				panelId = '',
 				direction = '';
 
 			function setDirection(dir) {
@@ -17,18 +18,21 @@ define(["lib/pubsub"], function() {
 					.bind('click', function(){
 						if (panels.is(':animated')) { return; }
 
-						$.publish("/toggle/stopTimer");
+						console.log('click');
+
+						$.publish("/" + panelId.replace('#','') + "/stopTimer");
 
 						if (direction === 'next') {
-							$.publish("/toggle/next");
+							$.publish("/" + panelId.replace('#','') + "/next");
 						} else if (direction === 'prev') {
-							$.publish("/toggle/prev");
+							$.publish("/" + panelId.replace('#','') + "/prev");
 						}
 					});
 			}
 
 			function init(config) {
-				panels = $(config.panels);
+				panels = $(config.panels, config.container);
+				panelId = config.container;
 				direction = config.dir || '';
 				bindEvent();
 			}
