@@ -2,6 +2,7 @@ define(["lib/pubsub"], function() {
         
 		var Timer = function() {
 			var speed = 0,
+				panelId = '',
 				timer = null;
 
 			function stopTimer() {
@@ -11,13 +12,14 @@ define(["lib/pubsub"], function() {
 
 			function startTimer(s) {
 				timer = setInterval(function(){
-					$.publish("/toggle/autoplay");
+					$.publish("/" + panelId.replace('#','') + "/autoplay");
 				}, s);
 			}
 
-			function init(duration) {
-				speed = duration;
-				startTimer(duration);
+			function init(config) {
+				speed = config.duration;
+				panelId = config.container;
+				startTimer(config.duration);
 			}
 
 			return {

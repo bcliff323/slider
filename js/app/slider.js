@@ -68,7 +68,10 @@ define(
                             panels.fadeIn('fast');
 
                             if(autoPlay) {
-                                newTimer(autoPlay);
+                                newTimer({
+                                    duration: autoPlay,
+                                    container: panelId
+                                });
                             }
                         }
                     }
