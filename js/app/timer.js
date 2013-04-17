@@ -12,7 +12,7 @@ define(["lib/pubsub"], function() {
 
 			function startTimer(s) {
 				timer = setInterval(function(){
-					$.publish("/" + panelId.replace('#','') + "/autoplay");
+					$.publish("/" + panelId + "/autoplay");
 				}, s);
 			}
 

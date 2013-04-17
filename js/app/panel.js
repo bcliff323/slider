@@ -22,7 +22,7 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 				img.src = imgPath;
 
 				if (panelElement.hasClass('active')) {
-					$.publish("/" + panelId.replace('#','') + "/loaded", { 
+					$.publish("/" + panelId + "/loaded", { 
 						element: panelElement, 
 						path: bgImage, 
 						loadIndex: index+3,
@@ -30,7 +30,7 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 					});
 				} else {
 					$(img).load(function(){
-						$.publish("/" + panelId.replace('#','') + "/loaded", { 
+						$.publish("/" + panelId + "/loaded", { 
 							element: panelElement, 
 							path: bgImage, 
 							loadIndex: index+3,
@@ -107,34 +107,34 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 			}
 
 			function subscribe() {
-				$.subscribe("/" + panelId.replace('#','') + "/next", function(event) {
+				$.subscribe("/" + panelId + "/next", function(event) {
 					if(!panelElement.is(':animated')) {
                     	toggle({ direction: 'left' });
 					}
                 });
 
-                $.subscribe("/" + panelId.replace('#','') + "/prev", function(event) {
+                $.subscribe("/" + panelId + "/prev", function(event) {
                 	if(!panelElement.is(':animated')) {
                     	toggle({ direction: 'right' });
                     }
                 });
 
-                $.subscribe("/" + panelId.replace('#','') + "/direct", function(event, p) {
+                $.subscribe("/" + panelId + "/direct", function(event, p) {
                     toPosition({ pos: p });
                 });
 			}
 
 			function next() {
 				if (!panelElement.is(':animated')) {
-					$.publish("/" + panelId.replace('#','') + "/stopTimer");
-					$.publish("/" + panelId.replace('#','') + "/next");
+					$.publish("/" + panelId + "/stopTimer");
+					$.publish("/" + panelId + "/next");
 				}
 			}
 
 			function prev() {
 				if (!panelElement.is(':animated')) {
-					$.publish("/" + panelId.replace('#','') + "/stopTimer");
-					$.publish("/" + panelId.replace('#','') + "/prev");
+					$.publish("/" + panelId + "/stopTimer");
+					$.publish("/" + panelId + "/prev");
 				}
 			}
 

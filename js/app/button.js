@@ -15,14 +15,14 @@ define(["lib/pubsub"], function() {
 
 			function publish() {
 				if (direction === 'next') {
-					$.publish("/" + panelId.replace('#','') + "/next");
+					$.publish("/" + panelId + "/next");
 				} else if (direction === 'prev') {
-					$.publish("/" + panelId.replace('#','') + "/prev");
+					$.publish("/" + panelId + "/prev");
 				}
 			}
 
 			function stopTimer() {
-				$.publish("/" + panelId.replace('#','') + "/stopTimer");
+				$.publish("/" + panelId + "/stopTimer");
 			}
 
 			function sendToggleEvent() {

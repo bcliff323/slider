@@ -29,7 +29,7 @@ define(
 
             function advance() {
                 if (index < uniquePanels) {
-                    $.publish("/" + panelId.replace('#','') + "/next");
+                    $.publish("/" + panelId + "/next");
                     index++;
                 } else {
                     timer.stop();
@@ -49,15 +49,15 @@ define(
             }
 
             function subscribe() {
-                $.subscribe("/" + panelId.replace('#','') + "/autoplay", function(event) {
+                $.subscribe("/" + panelId + "/autoplay", function(event) {
                     advance();
                 });
 
-                $.subscribe("/" + panelId.replace('#','') + "/stopTimer", function(event) {
+                $.subscribe("/" + panelId + "/stopTimer", function(event) {
                     stopTimer();
                 });
 
-                $.subscribe("/" + panelId.replace('#','') + "/loaded", function(event, obj) {
+                $.subscribe("/" + panelId + "/loaded", function(event, obj) {
                     var markup = '<img alt="" class="bg" src="' + obj.path + '" />';
                     $(obj.element).append(markup);
 
@@ -82,9 +82,9 @@ define(
                 $(document).keydown(function(e){
                     stopTimer();
                     if (e.keyCode === 39) {
-                        $.publish("/" + panelId.replace('#','') + "/next");
+                        $.publish("/" + panelId + "/next");
                     } else if (e.keyCode === 37) {
-                        $.publish("/" + panelId.replace('#','') + "/prev");
+                        $.publish("/" + panelId + "/prev");
                     }
                 });
             }
@@ -92,7 +92,7 @@ define(
             function specificOrder(first) {
                 index = first;
                 stopTimer();
-                $.publish("/" + panelId.replace('#','') + "/direct", first);
+                $.publish("/" + panelId + "/direct", first);
             }
 
             function buildButtons() {
@@ -138,6 +138,7 @@ define(
                 }
                 
                 setPanels();
+                panelId = panelId.replace('#', '');
             }
 
             function setPanels() {
