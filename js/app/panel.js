@@ -20,10 +20,23 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 
 				img.src = imgPath;
 
-				$(img).load(function(){
-					panelElement.append('<img alt="" class="bg" src="' + bgImage + '" />');
-					$.publish("/image/loaded", index+3);
-				});
+				if (panelElement.hasClass('active')) {
+					$.publish("/image/loaded", { 
+						element: panelElement, 
+						path: bgImage, 
+						loadIndex: index+3,
+						skipFade: true
+					});
+				} else {
+					$(img).load(function(){
+						$.publish("/image/loaded", { 
+							element: panelElement, 
+							path: bgImage, 
+							loadIndex: index+3,
+							skipFade: false
+						});
+					});
+				}
 			}
 
 			function shuffle(obj) {
@@ -56,6 +69,12 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 						direction: 'append'
 					});
 				}
+
+				if (xCoord === 0) {
+					panelElement
+						.addClass('active');
+				}
+
 			}
 
 			function toggle(obj) {
@@ -123,6 +142,7 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 
 			function setXPosition(pos) {
 				xCoord = pos;
+				position = xCoord/width;
 				panelElement
 					.css('left', pos);
 			}

@@ -56,8 +56,22 @@ define(
                     stopTimer();
                 });
 
-                $.subscribe("/image/loaded", function(event, numLoaded) {
-                    console.log(numLoaded);
+                $.subscribe("/image/loaded", function(event, obj) {
+                    var markup = '<img alt="" class="bg" src="' + obj.path + '" />';
+                    $(obj.element).append(markup);
+
+                    if (obj.skipFade) {
+                        console.log('skipped');
+                        $(obj.element).addClass('active');
+                    } else {
+                        if (obj.loadIndex === numPanels) {
+                            panels.fadeIn('fast');
+
+                            if(autoPlay) {
+                                newTimer(autoPlay);
+                            }
+                        }
+                    }
                 });
             }
 
@@ -133,6 +147,8 @@ define(
                 if (urlParam > 1 && urlParam <= uniquePanels) {
                     specificOrder(parseInt(urlParam));
                     autoPlay = false;
+                } else {
+                    $(panels[2]).addClass('active');
                 }
             }
 
