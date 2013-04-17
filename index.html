@@ -4,12 +4,11 @@
 	<meta charset="UTF-8">
 	<title>Require JS</title>
 	<link href="css/main.css" rel="stylesheet">
-	<script type="text/javascript" src="js/lib/jquery.1.4.4.js"></script>
 </head>
 <body>
 	<div class="wrapper">
 		<div id="container1">
-			<div id="viewport1" class="viewPort" style="position:relative;">
+			<div class="viewPort">
 				<div class="panel" data-background="http://placehold.it/908x406">
 					<h1 class="title">This title 1</h1>
 					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
@@ -27,61 +26,6 @@
 				</div>
 				<div class="panel" data-background="http://placehold.it/908x403">
 					<h1 class="title">This title 4</h1>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-				</div>
-				<div class="panel" data-background="http://placehold.it/908x402">
-					<h1 class="title">This title 5</h1>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-				</div>
-				<div class="panel" data-background="http://placehold.it/908x401">
-					<h1 class="title">This title 6</h1>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-				</div>
-			</div>
-			<div class="nextBtn btn"></div>
-			<div class="prevBtn btn"></div>
-			<div class="nav cf">
-				<ul>
-					<li href="#" class="step fl" index="1"></li>
-					<li href="#" class="step fl" index="2"></li>
-					<li href="#" class="step fl" index="3"></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="wrapper">
-		<div id="container2">
-			<div id="viewport2" class="viewPort" style="position:relative;">
-				<div class="panel" data-background="http://placehold.it/908x406">
-					<h1 class="title">This title 1</h1>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>\
-				</div>
-				<div class="panel" data-background="http://placehold.it/908x405">
-					<h1 class="title">This title 2</h1>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-				</div>
-				<div class="panel" data-background="http://placehold.it/908x404">
-					<h1 class="title">This title 3</h1>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-				</div>
-				<div class="panel" data-background="http://placehold.it/908x403">
-					<h1 class="title">This title 4</h1>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-				</div>
-				<div class="panel" data-background="http://placehold.it/908x402">
-					<h1 class="title">This title 5</h1>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
-				</div>
-				<div class="panel" data-background="http://placehold.it/908x401">
-					<h1 class="title">This title 6</h1>
 					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
 					<p>akjdhfkajshdfadf <a href="#">TLSDKFJ SDFLK SLF SLDF</a></p>
 				</div>
@@ -102,13 +46,6 @@
 		window.grandMarquee = [];
 		window.grandMarquee[0] = {
 			panelId: '#container1', 
-	    	panelClass: '.panel',
-	        nextClass: '.nextBtn',
-	        prevClass: '.prevBtn',
-	        autoPlay: 3000
-	    };
-	    window.grandMarquee[1] = {
-			panelId: '#container2', 
 	    	panelClass: '.panel',
 	        nextClass: '.nextBtn',
 	        prevClass: '.prevBtn',

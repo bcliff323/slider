@@ -78,6 +78,17 @@ define(
                 });
             }
 
+            function enableKeyPress() {
+                $(document).keydown(function(e){
+                    stopTimer();
+                    if (e.keyCode === 39) {
+                        $.publish("/" + panelId.replace('#','') + "/next");
+                    } else if (e.keyCode === 37) {
+                        $.publish("/" + panelId.replace('#','') + "/prev");
+                    }
+                });
+            }
+
             function specificOrder(first) {
                 index = first;
                 stopTimer();
@@ -147,6 +158,7 @@ define(
                 clonePanels();
                 buildPanels();
                 buildButtons();
+                enableKeyPress();
                 subscribe();
 
                 if (urlParam > 1 && urlParam <= uniquePanels) {

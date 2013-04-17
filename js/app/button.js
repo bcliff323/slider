@@ -13,20 +13,29 @@ define(["lib/pubsub"], function() {
 				} 
 			}
 
+			function publish() {
+				if (direction === 'next') {
+					$.publish("/" + panelId.replace('#','') + "/next");
+				} else if (direction === 'prev') {
+					$.publish("/" + panelId.replace('#','') + "/prev");
+				}
+			}
+
+			function stopTimer() {
+				$.publish("/" + panelId.replace('#','') + "/stopTimer");
+			}
+
+			function sendToggleEvent() {
+				if (panels.is(':animated')) { return; }
+
+				stopTimer();
+				publish();
+			}
+
 			function bindEvent() {
 				element
 					.bind('click', function(){
-						if (panels.is(':animated')) { return; }
-
-						console.log('click');
-
-						$.publish("/" + panelId.replace('#','') + "/stopTimer");
-
-						if (direction === 'next') {
-							$.publish("/" + panelId.replace('#','') + "/next");
-						} else if (direction === 'prev') {
-							$.publish("/" + panelId.replace('#','') + "/prev");
-						}
+						sendToggleEvent();
 					});
 			}
 

@@ -108,11 +108,15 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 
 			function subscribe() {
 				$.subscribe("/" + panelId.replace('#','') + "/next", function(event) {
-                    toggle({ direction: 'left' });
+					if(!panelElement.is(':animated')) {
+                    	toggle({ direction: 'left' });
+					}
                 });
 
                 $.subscribe("/" + panelId.replace('#','') + "/prev", function(event) {
-                    toggle({ direction: 'right' });
+                	if(!panelElement.is(':animated')) {
+                    	toggle({ direction: 'right' });
+                    }
                 });
 
                 $.subscribe("/" + panelId.replace('#','') + "/direct", function(event, p) {
