@@ -36,7 +36,7 @@
 .nextSlide{left:938px;}
 .cf { clear: both; }
 .imgLink { display: block; float:right; }
-.btn { min-width: 30px; min-height: 30px; background: #666; position: absolute; z-index: 2;}
+.btn { display:none; min-width: 30px; min-height: 30px; background: #666; position: absolute; z-index: 2;}
 .nextBtn { right: -30px; top:150px; }
 .prevBtn { left: -30px; top:150px; }
 .fl { float: left; }

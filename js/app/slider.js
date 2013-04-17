@@ -155,6 +155,7 @@ define(
                 setPanels();
                 slideObj = panels.parent();
 
+
                 clonePanels();
                 buildPanels();
                 buildButtons();

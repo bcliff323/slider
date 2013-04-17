@@ -7,6 +7,11 @@ define(["lib/pubsub"], function() {
 				panelId = '',
 				direction = '';
 
+			function showElement() {
+				element
+					.show('fast');
+			}
+
 			function setDirection(dir) {
 				if (direction.length === 0) {
 					direction = dir;
@@ -44,6 +49,7 @@ define(["lib/pubsub"], function() {
 				panelId = config.container;
 				direction = config.dir || '';
 				bindEvent();
+				showElement();
 			}
 
 			return {
