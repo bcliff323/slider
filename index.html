@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Require JS</title>
 	<link href="css/main.css" rel="stylesheet">
+	<script type="text/javascript" src="js/lib/jquery.1.4.4.js"></script>
 </head>
 <body>
 	<div class="wrapper">
@@ -51,8 +52,23 @@
 			</div>
 		</div>
 	</div>
-	<!--<script type="text/javascript" data-main="js/main" src="js/lib/require.js"></script>-->
+	<script type="text/javascript">
 
-	<script type="text/javascript" src="js/main.min.js"></script>
+		window.grandMarquee = [];
+		window.grandMarquee[0] = {
+			panelId: '#container', 
+	    	panelClass: '.panel',
+	        nextClass: '.nextBtn',
+	        prevClass: '.prevBtn',
+	        autoPlay: 3000
+	    };
+
+	</script>
+
+	<script type="text/javascript" data-main="js/main" src="js/lib/require.js"></script>-->
+	<!--<script type="text/javascript" src="js/main.min.js"></script>-->
+	
+
+	
 </body>
 </html>

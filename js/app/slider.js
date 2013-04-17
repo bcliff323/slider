@@ -15,6 +15,7 @@ define(
         	var self = this,
                 urlParam = QueryString("slide") || 1,
                 autoPlay = false,
+                panelId = '',
                 panelClass = '',
                 panelSet = [],
                 uniquePanels = 0,
@@ -126,12 +127,13 @@ define(
             }
 
             function setPanels() {
-                panels = $(panelClass);
+                panels = $(panelClass, panelId);
                 uniquePanels = numPanels;
                 numPanels = panels.length;
             }
 
             function init(config) {
+                panelId = config.panelId;
                 panelClass = config.panelClass;
                 nextObj = $(config.nextClass);
                 prevObj = $(config.prevClass);

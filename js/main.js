@@ -3,16 +3,15 @@ requirejs.config({
     baseUrl: 'js'
 });
 
-require(["lib/jquery", "app/slider"], function(jQuery, Slider) {
+require(["lib/jquery", "app/slider"], function($, Slider) {
+
+    var global = window;
+    global.sliders = {};
     
-    var swipe = new Slider();
-    swipe.init({ 
-    	panelClass: '.panel',
-        nextClass: '.nextBtn',
-        prevClass: '.prevBtn',
-        autoPlay: 3000
-    });
-    
-    window.swipe = swipe;
+    for (var i = 0, len = global.grandMarquee.length; i < len; i++) {
+        global.sliders[i] = new Slider();
+        global.sliders[i].init(global.grandMarquee[i]);
+    }
+
 });
 
