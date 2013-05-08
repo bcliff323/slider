@@ -69,6 +69,12 @@ define(["../lib/Modernizr", "../lib/swipe", "lib/pubsub"], function() {
 						n: siblings,
 						direction: 'append'
 					});
+				} else if (xCoord/width > siblings-2) { // new url param code
+					shuffle({ 
+						pos: (xCoord/width), 
+						n: siblings,
+						direction: 'prepend'
+					});
 				}
 
 				if (xCoord === 0) {
