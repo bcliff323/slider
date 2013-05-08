@@ -137,7 +137,8 @@ define(
                 slider
                     .append(clones);
 
-                if (urlParam === '1' || urlParam === 1 || urlParam > uniquePanels) {
+                // new url param code
+                if (paramIndex < 0) {
                     slider
                         .prepend($(clones)[clones.length-1])
                         .prepend($(clones)[clones.length-2]);
@@ -166,6 +167,8 @@ define(
                                 $(this).attr('data-slide-name')
                             );
                     });
+
+                paramIndex = $.inArray(urlParam, urlParams);
             }
 
             function init(config) {
@@ -177,19 +180,20 @@ define(
                 setPanels();
                 slideObj = panels.parent();
 
-                clonePanels();
+                // new url param code
                 captureURLParams();
+                clonePanels();
+                
                 buildPanels();
                 buildButtons();
                 enableKeyPress();
                 subscribe();
 
-                paramIndex = $.inArray(urlParam, urlParams);
-                console.log(paramIndex);
+                // new url param code
                 if (paramIndex > -1 && paramIndex <= uniquePanels) {
                     specificOrder(parseInt(paramIndex-1));
                 } else {
-                    $(panels[2], config.panelId).addClass('active');
+                    $(panels[0], config.panelId).addClass('active');
                 }
             }
 
