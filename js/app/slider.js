@@ -18,6 +18,7 @@ define(
                 panelClass = '',
                 panelSet = [],
                 urlParams = [],     // new url param code
+                paramIndex = 0,     // new url param code
                 uniquePanels = 0,
                 numPanels = 0,
                 index = 0,
@@ -89,10 +90,11 @@ define(
                 });
             }
 
+            // new url param code
             function specificOrder(first) {
                 index = first;
-                stopTimer();
                 $.publish("/" + panelId + "/direct", first);
+                index = 0;
             }
 
             function buildButtons() {
@@ -182,9 +184,10 @@ define(
                 enableKeyPress();
                 subscribe();
 
-                if (urlParam > 1 && urlParam <= uniquePanels) {
-                    specificOrder(parseInt(urlParam));
-                    autoPlay = false;
+                paramIndex = $.inArray(urlParam, urlParams);
+                console.log(paramIndex);
+                if (paramIndex > -1 && paramIndex <= uniquePanels) {
+                    specificOrder(parseInt(paramIndex-1));
                 } else {
                     $(panels[2], config.panelId).addClass('active');
                 }
