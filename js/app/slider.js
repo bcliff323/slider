@@ -17,6 +17,7 @@ define(
                 panelId = '',
                 panelClass = '',
                 panelSet = [],
+                urlParams = [],     // new url param code
                 uniquePanels = 0,
                 numPanels = 0,
                 index = 0,
@@ -127,6 +128,10 @@ define(
                     clones = slider.find(panelClass);
                 }
 
+                // new url param code
+                clones
+                    .removeAttr('data-slide-name');
+
                 slider
                     .append(clones);
 
@@ -146,6 +151,21 @@ define(
                 numPanels = panels.length;
             }
 
+            // new url param code
+            function captureURLParams() {
+                var params = urlParams,
+                    data = panels.attr('data-name');
+
+                slideObj
+                    .find('div[data-slide-name]')
+                    .map(function(){
+                        urlParams
+                            .push(
+                                $(this).attr('data-slide-name')
+                            );
+                    });
+            }
+
             function init(config) {
                 panelId = config.panelId;
                 panelClass = config.panelClass;
@@ -155,8 +175,8 @@ define(
                 setPanels();
                 slideObj = panels.parent();
 
-
                 clonePanels();
+                captureURLParams();
                 buildPanels();
                 buildButtons();
                 enableKeyPress();
