@@ -1,34 +1,53 @@
 define(["lib/pubsub"], function() {
-        
-		var Timer = function() {
-			var speed = 0,
-				panelId = '',
-				timer = null;
 
-			function stopTimer() {
-				clearInterval(timer);
-				timer = null;
-			}
+        /**
+         * Timer for the slider auto-advance. Manages starting
+         * and stopping of the slider.
+         *
+         * @constructor
+         * @this { Timer }
+         */    
+        var Timer = function() {
+            var speed = 0;
+            var panelId = '';
+            var timer = null;
 
-			function startTimer(s) {
-				timer = setInterval(function(){
-					$.publish("/" + panelId + "/autoplay");
-				}, s);
-			}
+            /**
+             * Stops the timer.
+             */
+            function stopTimer() {
+                clearInterval(timer);
+                timer = null;
+            }
 
-			function init(config) {
-				speed = config.duration;
-				panelId = config.container;
-				startTimer(config.duration);
-			}
+            /**
+             * Starts the timer, publishes start event to timer
+             * subscribers.
+             *
+             * @param { Number } s - Timer interval in Milliseconds.
+             */
+            function startTimer(s) {
+                timer = setInterval(function(){
+                    $.publish("/" + panelId + "/autoplay");
+                }, s);
+            }
 
-			return {
-				init: init,
-				start: startTimer,
-				stop: stopTimer
-			}
-		}
+            /**
+             * Initializes and starts the timer.
+             */
+            function init(config) {
+                speed = config.duration;
+                panelId = config.container;
+                startTimer(config.duration);
+            }
 
-		return Timer;
+            return {
+                init: init,
+                start: startTimer,
+                stop: stopTimer
+            }
+        }
+
+        return Timer;
     }
 );

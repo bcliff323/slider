@@ -1,28 +1,43 @@
 define(["lib/pubsub"], function() {
         
-		var Nav = function(element) {
-			var self = this,
-				items = element || null;
+        /**
+         * The Navigation element for the carousel.
+         *
+         * @constructor
+         * @this { Nav }
+         * @param { Object } element - The jquery object wrapping
+         *      the nav container. 
+         */
+        var Nav = function(element) {
+            var self = this;
+            var items = element || null;
 
-			function bindEvent() {
-				items
-					.click(function(e){
-						e.preventDefault();
+            /**
+             * Binds the click event to the nav items. Publishes
+             * message regarding which nav item was clicked.
+             */
+            function bindEvent() {
+                items
+                    .click(function(e){
+                        e.preventDefault();
 
-						var index = $(this).attr('index');
-						$.publish("/toggle/direct", index);
-					});
-			}
+                        var index = $(this).attr('index');
+                        $.publish("/toggle/direct", index);
+                    });
+            }
 
-			function init() {
-				bindEvent();
-			}
+            /**
+             * Initializes the Nav, binds jQuery event listeners.
+             */
+            function init() {
+                bindEvent();
+            }
 
-			return {
-				init: init
-			}
-		}
+            return {
+                init: init
+            }
+        }
 
-		return Nav;
+        return Nav;
     }
 );

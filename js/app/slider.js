@@ -8,26 +8,47 @@ define(
             "lib/pubsub"
     ], 
 
+    /**
+     * The main app module.
+     *
+     * @param { Object } Panel - The Panel Class.
+     * @param { Object } Button - The Button Class.
+     * @param { Object } Timer - The Timer Class.
+     * @param { Object } QueryString - The QueryString method.
+     */
     function(Panel, Button, Timer, QueryString) {
         
+        /**
+         * The main Slider constructor. Assembles the slider
+         * carousel by instantiating panel objects, buttons,
+         * and starting a timer.
+         *
+         * @constructor
+         * @this { Slider }
+         */ 
         var Slider = function() {
-        	var self = this,
-                urlParam = QueryString("slide") || 1,
-                autoPlay = false,
-                panelId = '',
-                panelClass = '',
-                panelSet = [],
-                urlParams = [],     // new url param code
-                paramIndex = 0,     // new url param code
-                uniquePanels = 0,
-                numPanels = 0,
-                index = 0,
-                panels = null,
-                slideObj = null,
-                nextObj = null,
-                prevObj = null,
-                timer = null;
+            var self = this;
+            var urlParam = QueryString("slide") || 1;
+            var autoPlay = false;
+            var panelId = '';
+            var panelClass = '';
+            var panelSet = [];
+            var urlParams = [];     // new url param code
+            var paramIndex = 0;     // new url param code
+            var uniquePanels = 0;
+            var numPanels = 0;
+            var index = 0;
+            var panels = null;
+            var slideObj = null;
+            var nextObj = null;
+            var prevObj = null;
+            var timer = null;
 
+            /**
+             * Advances the slider by publishing a next event.
+             * This is received by the panels, which toggle their
+             * own positions.
+             */
             function advance() {
                 if (index < uniquePanels) {
                     $.publish("/" + panelId + "/next");
@@ -38,17 +59,31 @@ define(
                 }
             }
 
+            /**
+             * Instantiates a new timer and starts it, given an
+             * interval, in milliseconds.
+             *
+             * @param { Number } speed - The speed of the timer.
+             */
             function newTimer(speed) {
                 timer = new Timer();
                 timer.init(speed);
             }
 
+            /**
+             * Stops the slider timer.
+             */
             function stopTimer() {
                 if (timer !== null) {
                     timer.stop();
                 }
             }
 
+            /**
+             * Subscribes to timer events, and image load events.
+             * Adds image tags to the slideshow when all assets are
+             * loaded.
+             */
             function subscribe() {
                 $.subscribe("/" + panelId + "/autoplay", function(event) {
                     advance();
@@ -79,6 +114,10 @@ define(
                 });
             }
 
+            /**
+             * Enables slider navigation by pressing right
+             * and left arrow keys.
+             */
             function enableKeyPress() {
                 $(document).keydown(function(e){
                     stopTimer();
@@ -90,24 +129,36 @@ define(
                 });
             }
 
-            // new url param code
+            /**
+             * Moves slider to specific position, triggered if
+             * QueryString parameters are set.
+             *
+             * @param { Number } first - The index of the panel to load as 
+             *      the hero slide.
+             */
             function specificOrder(first) {
                 index = first;
                 $.publish("/" + panelId + "/direct", first);
                 index = 0;
             }
 
+            /**
+             * Instantiates button objects, initializes them.
+             */
             function buildButtons() {
-                var nextBtn = new Button(nextObj),
-                    prevBtn = new Button(prevObj);
+                var nextBtn = new Button(nextObj);
+                var prevBtn = new Button(prevObj);
 
                 nextBtn.init({ dir: 'next', panels: panelClass, container: panelId });
                 prevBtn.init({ dir: 'prev', panels: panelClass, container: panelId });
             }
 
+            /**
+             * Instantiates panel objects, initializes them.
+             */
             function buildPanels() {
-                var pnls = panels,
-                    numP = numPanels;
+                var pnls = panels;
+                var numP = numPanels;
 
                 for (var i = -2, len = numPanels-2; i<len; i++) {
                     panelSet.push(
@@ -120,9 +171,13 @@ define(
                 }
             }
 
+            /**
+             * In the event that there are fewer than 6 slides, clone 
+             * the panels in order to allow infinite scroll.
+             */
             function clonePanels() {
-                var slider = slideObj,
-                    clones = null;
+                var slider = slideObj;
+                var clones = null;
 
                 if (numPanels > 2 && numPanels < 6) {
                     clones = slider.find(panelClass).clone();
@@ -130,14 +185,13 @@ define(
                     clones = slider.find(panelClass);
                 }
 
-                // new url param code
+                // remove data attrs, the are no longer needed.
                 clones
                     .removeAttr('data-slide-name');
 
                 slider
                     .append(clones);
 
-                // new url param code
                 if (paramIndex < 0) {
                     slider
                         .prepend($(clones)[clones.length-1])
@@ -148,16 +202,23 @@ define(
                 panelId = panelId.replace('#', '');
             }
 
+            /**
+             * Sets references to the panel objects, number of 
+             * unique panels, and number of total panels.
+             */
             function setPanels() {
                 panels = $(panelClass, panelId);
                 uniquePanels = numPanels;
                 numPanels = panels.length;
             }
 
-            // new url param code
+            /**
+             * Captures url parameters and determines which slide
+             * to set in the Hero position.
+             */
             function captureURLParams() {
-                var params = urlParams,
-                    data = panels.attr('data-name');
+                var params = urlParams;
+                var data = panels.attr('data-name');
 
                 slideObj
                     .find('div[data-slide-name]')
@@ -171,6 +232,11 @@ define(
                 paramIndex = $.inArray(urlParam, urlParams);
             }
 
+            /**
+             * Initializes the slider object.
+             *
+             * @param { Object } config - The slider configuration
+             */
             function init(config) {
                 panelId = config.panelId;
                 panelClass = config.panelClass;
@@ -180,7 +246,6 @@ define(
                 setPanels();
                 slideObj = panels.parent();
 
-                // new url param code
                 captureURLParams();
                 clonePanels();
                 
@@ -189,7 +254,6 @@ define(
                 enableKeyPress();
                 subscribe();
 
-                // new url param code
                 if (paramIndex > -1 && paramIndex <= uniquePanels) {
                     specificOrder(parseInt(paramIndex-1));
                 } else {
@@ -202,6 +266,6 @@ define(
             }
         }
         
-		return Slider;
+        return Slider;
     }
 );

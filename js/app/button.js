@@ -1,63 +1,89 @@
 define(["lib/pubsub"], function() {
         
-		var Button = function(element) {
-			var self = this,
-				element = element || null,
-				panels = null,
-				panelId = '',
-				direction = '';
+        /**
+         * The Forward/Back button for the carousel.
+         *
+         * @constructor
+         * @this { Button }
+         * @param { Object } element - The jquery object wrapping
+         *      the button. 
+         */
+        var Button = function(element) {
+            var self = this;
+            var element = element || null;
+            var panels = null;
+            var panelId = '';
+            var direction = '';
 
-			function showElement() {
-				element
-					.show('fast');
-			}
+            /**
+             * Fades in the element after initialization/asset
+             * loading is complete.
+             */
+            function showElement() {
+                element
+                    .show('fast');
+            }
 
-			function setDirection(dir) {
-				if (direction.length === 0) {
-					direction = dir;
-				} 
-			}
+            /**
+             * Publishes forward and backward navigation to 
+             * subscribing elements.
+             */
+            function publish() {
+                if (direction === 'next') {
+                    $.publish("/" + panelId + "/next");
+                } else if (direction === 'prev') {
+                    $.publish("/" + panelId + "/prev");
+                }
+            }
 
-			function publish() {
-				if (direction === 'next') {
-					$.publish("/" + panelId + "/next");
-				} else if (direction === 'prev') {
-					$.publish("/" + panelId + "/prev");
-				}
-			}
+            /**
+             * Publishes a `stopTimer` event, telling the 
+             * timer object to stop itself.
+             */
+            function stopTimer() {
+                $.publish("/" + panelId + "/stopTimer");
+            }
 
-			function stopTimer() {
-				$.publish("/" + panelId + "/stopTimer");
-			}
+            /**
+             * Triggers the stopTimer event, publishes slide 
+             * toggle event. Called on button click.
+             */
+            function sendToggleEvent() {
+                if (panels.is(':animated')) { return; }
 
-			function sendToggleEvent() {
-				if (panels.is(':animated')) { return; }
+                stopTimer();
+                publish();
+            }
 
-				stopTimer();
-				publish();
-			}
+            /**
+             * Binds the button click event.
+             */
+            function bindEvent() {
+                element
+                    .bind('click', function(){
+                        sendToggleEvent();
+                    });
+            }
 
-			function bindEvent() {
-				element
-					.bind('click', function(){
-						sendToggleEvent();
-					});
-			}
+            /**
+             * Initializes the button object.
+             *
+             * @param { Object } config - The configuration object
+             *      for the button.
+             */
+            function init(config) {
+                panels = $(config.panels, config.container);
+                panelId = config.container;
+                direction = config.dir || '';
+                bindEvent();
+                showElement();
+            }
 
-			function init(config) {
-				panels = $(config.panels, config.container);
-				panelId = config.container;
-				direction = config.dir || '';
-				bindEvent();
-				showElement();
-			}
+            return {
+                init: init
+            }
+        }
 
-			return {
-				setDirection: setDirection,
-				init: init
-			}
-		}
-
-		return Button;
+        return Button;
     }
 );
